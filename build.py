@@ -504,12 +504,43 @@ def render_dir(d):
             errs.append(f"{fn}: {e}")
     print(f"rendered {n} pages"); [print("ERR",e) for e in errs]
 
+
+def prune_dead_links():
+    """Unwrap internal <a> links whose target page does not exist yet (e.g. tranches
+    not yet published), keeping the anchor text. Re-running after new pages render
+    restores them automatically, since pages are rebuilt fresh each time."""
+    import glob as _glob
+    pages=_glob.glob(os.path.join(ROOT,"**","index.html"),recursive=True)
+    exist=set()
+    for p in pages:
+        rel=os.path.relpath(os.path.dirname(p),ROOT).replace("\\","/")
+        exist.add("/" if rel=="." else f"/{rel}/")
+    link_re=re.compile(r'<a\s+href="(/[^"#?]*/)"[^>]*>(.*?)</a>',re.S)
+    split_re=re.compile(r'(<script\b.*?</script>)',re.S|re.I)
+    total=0
+    for p in pages:
+        html_txt=open(p,encoding="utf-8").read()
+        parts=split_re.split(html_txt); changed=False
+        for i,part in enumerate(parts):
+            if part.lower().startswith("<script"): continue
+            def repl(m):
+                nonlocal changed
+                if m.group(1) in exist or m.group(1).startswith("/assets/"): return m.group(0)
+                changed=True
+                return m.group(2)
+            parts[i]=link_re.sub(repl,part)
+        if changed:
+            open(p,"w",encoding="utf-8").write("".join(parts)); total+=1
+    print(f"pruned dead links on {total} pages ({len(exist)} live paths)")
+
 if __name__=="__main__":
     cmd = sys.argv[1] if len(sys.argv)>1 else "shell"
     if cmd=="shell":
         build_homepage(); legal_pages(); calc_ticket_cost(); calc_points(); calc_insurance(); crawler_files(); build_sitemap()
         print("shell built")
     elif cmd=="render":
-        render_dir(sys.argv[2]); build_sitemap()
+        render_dir(sys.argv[2]); prune_dead_links(); build_sitemap()
+    elif cmd=="prune":
+        prune_dead_links()
     elif cmd=="sitemap":
         build_sitemap()
