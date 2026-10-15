@@ -1,0 +1,104 @@
+/* TicketCostGuide design system — mobile-first, CWV-friendly, no JS deps */
+:root{
+  --navy:#13263f; --navy-2:#1d3a5f; --ink:#22303f; --muted:#5b6b7c;
+  --amber:#f5a623; --amber-dark:#d48806; --bg:#f7f9fb; --card:#ffffff;
+  --line:#e3e9ef; --link:#0b5bd3; --link-visited:#5a3fb5; --ok:#1a7f4e; --warn:#b3261e;
+  --radius:10px; --maxw:860px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink);background:var(--bg);line-height:1.65;font-size:17px}
+a{color:var(--link)} a:visited{color:var(--link-visited)}
+img{max-width:100%;height:auto}
+
+/* Header */
+.site-header{background:var(--navy);color:#fff;padding:0 16px}
+.site-header .wrap{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;min-height:58px;flex-wrap:wrap;gap:4px;padding:8px 0}
+.logo{color:#fff;text-decoration:none;font-weight:800;font-size:1.15rem;letter-spacing:-.01em}
+.logo span{color:var(--amber)}
+.main-nav{display:flex;gap:14px;flex-wrap:wrap}
+.main-nav a{color:#dbe6f3;text-decoration:none;font-size:.9rem;padding:4px 0}
+.main-nav a:hover{color:#fff;text-decoration:underline}
+
+/* Layout */
+.container{max-width:var(--maxw);margin:0 auto;padding:0 16px}
+main.container{padding-top:18px;padding-bottom:40px}
+.kicker{display:inline-block;background:#fdf1d7;color:var(--amber-dark);font-weight:700;
+  font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border-radius:999px;margin:10px 0 6px}
+h1{font-size:1.72rem;line-height:1.25;margin:.2em 0 .45em;letter-spacing:-.015em}
+h2{font-size:1.32rem;margin:1.6em 0 .5em;letter-spacing:-.01em}
+h3{font-size:1.1rem;margin:1.3em 0 .4em}
+.quick-answer{background:#fff;border:1px solid var(--line);border-left:5px solid var(--amber);
+  border-radius:var(--radius);padding:14px 18px;margin:14px 0 20px;font-size:1.02em}
+.quick-answer strong{color:var(--navy)}
+.byline{color:var(--muted);font-size:.85rem;margin:2px 0 8px}
+.byline a{color:var(--muted)}
+
+/* Breadcrumbs */
+.breadcrumbs{font-size:.82rem;color:var(--muted);margin:14px 0 0;padding:0}
+.breadcrumbs ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px}
+.breadcrumbs li+li::before{content:"›";margin:0 6px;color:#9fb0c0}
+.breadcrumbs a{color:var(--muted);text-decoration:none}
+.breadcrumbs a:hover{text-decoration:underline}
+
+/* Tables */
+.table-wrap{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:var(--radius);background:#fff}
+table{border-collapse:collapse;width:100%;font-size:.93rem;min-width:420px}
+caption{text-align:left;font-weight:700;padding:10px 14px 2px;color:var(--navy)}
+th{background:var(--navy);color:#fff;text-align:left;padding:9px 12px;font-size:.85rem}
+td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
+tbody tr:nth-child(even){background:#f4f7fa}
+.reviewed{font-size:.78rem;color:var(--muted);padding:6px 14px 10px;display:block}
+
+/* FAQ */
+.faq details{background:#fff;border:1px solid var(--line);border-radius:var(--radius);margin:8px 0;padding:0 16px}
+.faq summary{cursor:pointer;font-weight:700;padding:12px 0;color:var(--navy)}
+.faq details[open] summary{border-bottom:1px solid var(--line)}
+.faq details p{margin:10px 0 14px}
+
+/* Cards / grids */
+.grid{display:grid;gap:12px;grid-template-columns:1fr;margin:16px 0}
+@media(min-width:560px){.grid.cols-2{grid-template-columns:1fr 1fr}.grid.cols-3{grid-template-columns:1fr 1fr 1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+.card h3{margin-top:0}
+.card a.cta{font-weight:700;text-decoration:none}
+.state-list{columns:2;column-gap:20px;list-style:none;padding:0;margin:12px 0;font-size:.95rem}
+@media(min-width:560px){.state-list{columns:3}}
+.state-list li{margin:4px 0;break-inside:avoid}
+.state-list a{text-decoration:none}
+.state-list a:hover{text-decoration:underline}
+
+/* Related / cross-silo */
+.related{background:#eef3f8;border-radius:var(--radius);padding:14px 18px;margin:22px 0}
+.related h2,.related h3{margin-top:0;font-size:1.05rem}
+.related ul{margin:6px 0 0;padding-left:20px}
+
+/* Sources */
+.sources{font-size:.86rem;color:var(--muted);border-top:1px solid var(--line);margin-top:28px;padding-top:12px}
+.sources ol{padding-left:20px}
+.disclaimer-note{font-size:.82rem;color:var(--muted);background:#fbf6ea;border:1px solid #f0e2bd;
+  border-radius:var(--radius);padding:10px 14px;margin:20px 0}
+
+/* Calculator */
+.calc{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin:16px 0}
+.calc label{display:block;font-weight:700;font-size:.9rem;margin:12px 0 4px}
+.calc select,.calc input[type=number]{width:100%;padding:10px;border:1px solid #c6d2de;border-radius:8px;font-size:1rem;background:#fff}
+.calc button{margin-top:16px;background:var(--amber);border:0;color:#2a1c00;font-weight:800;
+  padding:12px 22px;border-radius:8px;font-size:1rem;cursor:pointer;width:100%}
+.calc button:hover{background:var(--amber-dark);color:#fff}
+.calc-result{display:none;margin-top:16px;background:#eef8f1;border:1px solid #bfe3cd;border-radius:8px;padding:14px 16px}
+.calc-result.show{display:block}
+.calc-result .big{font-size:1.5rem;font-weight:800;color:var(--ok)}
+.calc-note{font-size:.8rem;color:var(--muted);margin-top:8px}
+
+/* Ad slots (reserved height to prevent CLS) */
+.ad-slot{min-height:100px;margin:18px 0;display:flex;align-items:center;justify-content:center;
+  background:#f0f3f6;border:1px dashed #d4dde6;border-radius:var(--radius);color:#9aa8b6;font-size:.75rem}
+
+/* Footer */
+.site-footer{background:var(--navy);color:#b9c7d8;margin-top:40px;padding:28px 16px;font-size:.85rem}
+.site-footer .wrap{max-width:var(--maxw);margin:0 auto}
+.site-footer a{color:#dbe6f3;text-decoration:none;margin-right:14px}
+.site-footer a:hover{text-decoration:underline}
+.site-footer p{margin:10px 0 0}

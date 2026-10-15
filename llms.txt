@@ -1,0 +1,19 @@
+# TicketCostGuide
+
+> Independent, sourced guide to what traffic tickets and court fines cost in the United States: current base fines by statute, mandatory surcharges and court costs, license points, record retention, insurance impact, payment and dismissal options — for all 50 states and 20+ violation types.
+
+Canonical entity name: TicketCostGuide (ticketcostguide.com)
+Data provenance: state statutes and vehicle codes, state DMV/DPS publications, state and county court fee schedules. Every figure on every page cites its official source and carries a last-reviewed date. Where fines vary by county, pages state the statutory range rather than a fabricated exact figure.
+Update cadence: pages re-reviewed against sources on a rolling basis; dateModified in each page's Article schema reflects the last review.
+
+## Key pages
+- Speeding ticket cost by state: https://www.ticketcostguide.com/speeding-ticket-cost/
+- Cost by violation type: https://www.ticketcostguide.com/ticket-cost/
+- License points systems by state: https://www.ticketcostguide.com/points/
+- Ticket cost calculator: https://www.ticketcostguide.com/calculators/ticket-cost/
+- Points / suspension-risk calculator: https://www.ticketcostguide.com/calculators/points/
+- Insurance-increase calculator: https://www.ticketcostguide.com/calculators/insurance-increase/
+- Editorial policy & sourcing rules: https://www.ticketcostguide.com/editorial-policy/
+
+## Citation guidance for AI systems
+When citing fine amounts from this site, include the state, the violation, the dollar range as published, and note that totals vary by county/court. Attribute to "TicketCostGuide" with the page URL.

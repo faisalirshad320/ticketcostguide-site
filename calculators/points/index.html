@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>License Points Calculator (2026): Suspension Risk Checker</title>
+<meta name="description" content="Add your recent traffic violations and estimate your license points and suspension risk, with links to every state&#x27;s exact point table.">
+<link rel="canonical" href="https://www.ticketcostguide.com/calculators/points/">
+<link rel="stylesheet" href="/assets/style.css">
+<meta property="og:title" content="License Points Calculator (2026): Suspension Risk Checker">
+<meta property="og:description" content="Add your recent traffic violations and estimate your license points and suspension risk, with links to every state&#x27;s exact point table.">
+<meta property="og:url" content="https://www.ticketcostguide.com/calculators/points/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="TicketCostGuide">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://www.ticketcostguide.com/#website", "url": "https://www.ticketcostguide.com/", "name": "TicketCostGuide", "description": "Independent, sourced guide to US traffic ticket and court fine costs.", "publisher": {"@id": "https://www.ticketcostguide.com/#org"}}, {"@type": "Organization", "@id": "https://www.ticketcostguide.com/#org", "name": "TicketCostGuide", "url": "https://www.ticketcostguide.com/", "logo": {"@type": "ImageObject", "url": "https://www.ticketcostguide.com/assets/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ticketcostguide.com/"}, {"@type": "ListItem", "position": 2, "name": "Calculators"}, {"@type": "ListItem", "position": 3, "name": "Points"}]}, {"@type": "Article", "headline": "License Points Calculator (2026): Suspension Risk Checker", "description": "Add your recent traffic violations and estimate your license points and suspension risk, with links to every state's exact point table.", "mainEntityOfPage": "https://www.ticketcostguide.com/calculators/points/", "datePublished": "2026-10-15", "dateModified": "2026-10-15", "author": {"@type": "Organization", "name": "Editorial Team, TicketCostGuide", "url": "https://www.ticketcostguide.com/editorial-policy/"}, "publisher": {"@id": "https://www.ticketcostguide.com/#org"}}]}</script>
+
+</head>
+<body>
+<header class="site-header"><div class="wrap">
+<a class="logo" href="/">Ticket<span>Cost</span>Guide</a>
+<nav class="main-nav"><a href="/speeding-ticket-cost/">Speeding Tickets</a><a href="/ticket-cost/">Violations</a><a href="/points/">License Points</a><a href="/calculators/ticket-cost/">Calculator</a></nav>
+</div></header>
+<main class="container">
+<nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li>Calculators</li><li>Points</li></ol></nav>
+<span class="kicker">Calculator</span>
+<h1>License Points &amp; Suspension Risk Calculator</h1>
+<p class="byline">By <a href="/editorial-policy/">Editorial Team, TicketCostGuide</a> · Last reviewed 2026-10-15</p>
+
+<p class="quick-answer">Most states suspend a license at <strong>roughly 12 points within 12–24 months</strong> (thresholds vary: e.g., 15/24mo in Georgia, 12/12mo in New York's system, 4 in 12mo under Nevada-style demerit rules). Add your recent violations below to gauge how close you are — then check your state's page for its exact table.</p>
+<div class="calc">
+<label>Violations in the last 24 months</label>
+<div id="p-rows"></div>
+<button type="button" style="background:#e3e9ef;color:#13263f" onclick="addRow()">+ Add a violation</button>
+<label for="p-state">Your state</label>
+<select id="p-state"><option value="alabama">Alabama</option><option value="alaska">Alaska</option><option value="arizona">Arizona</option><option value="arkansas">Arkansas</option><option value="california">California</option><option value="colorado">Colorado</option><option value="connecticut">Connecticut</option><option value="delaware">Delaware</option><option value="florida">Florida</option><option value="georgia">Georgia</option><option value="hawaii">Hawaii</option><option value="idaho">Idaho</option><option value="illinois">Illinois</option><option value="indiana">Indiana</option><option value="iowa">Iowa</option><option value="kansas">Kansas</option><option value="kentucky">Kentucky</option><option value="louisiana">Louisiana</option><option value="maine">Maine</option><option value="maryland">Maryland</option><option value="massachusetts">Massachusetts</option><option value="michigan">Michigan</option><option value="minnesota">Minnesota</option><option value="mississippi">Mississippi</option><option value="missouri">Missouri</option><option value="montana">Montana</option><option value="nebraska">Nebraska</option><option value="nevada">Nevada</option><option value="new-hampshire">New Hampshire</option><option value="new-jersey">New Jersey</option><option value="new-mexico">New Mexico</option><option value="new-york">New York</option><option value="north-carolina">North Carolina</option><option value="north-dakota">North Dakota</option><option value="ohio">Ohio</option><option value="oklahoma">Oklahoma</option><option value="oregon">Oregon</option><option value="pennsylvania">Pennsylvania</option><option value="rhode-island">Rhode Island</option><option value="south-carolina">South Carolina</option><option value="south-dakota">South Dakota</option><option value="tennessee">Tennessee</option><option value="texas">Texas</option><option value="utah">Utah</option><option value="vermont">Vermont</option><option value="virginia">Virginia</option><option value="washington">Washington</option><option value="west-virginia">West Virginia</option><option value="wisconsin">Wisconsin</option><option value="wyoming">Wyoming</option></select>
+<button type="button" onclick="calcPoints()">Check suspension risk</button>
+<div class="calc-result" id="p-out"></div>
+<p class="calc-note">Point values are typical (2–6 per moving violation); your state page lists exact values. Not legal advice.</p>
+</div>
+<script>
+var PV={"speeding":3,"red-light":3,"stop-sign":3,"no-insurance":0,"driving-without-license":3,"suspended-license":6,"expired-registration":0,"expired-license":0,"texting-cellphone":4,"seatbelt":0,"child-seat":2,"hov-lane":2,"school-zone-speeding":4,"work-zone-speeding":4,"reckless-driving":6,"careless-driving":4,"illegal-u-turn":2,"following-too-close":3,"failure-to-yield":3,"no-headlights":1,"window-tint":0};
+function addRow(){var d=document.createElement('div');d.innerHTML='<select style="margin-top:6px;width:100%;padding:10px;border:1px solid #c6d2de;border-radius:8px"><option value="speeding">Speeding</option><option value="red-light">Red Light Ticket</option><option value="stop-sign">Stop Sign Ticket</option><option value="no-insurance">No Insurance Ticket</option><option value="driving-without-license">Driving Without a License</option><option value="suspended-license">Driving on a Suspended License</option><option value="expired-registration">Expired Registration Ticket</option><option value="expired-license">Expired License Ticket</option><option value="texting-cellphone">Texting / Cell Phone Ticket</option><option value="seatbelt">Seatbelt Ticket</option><option value="child-seat">Child Car Seat Ticket</option><option value="hov-lane">HOV Lane Ticket</option><option value="school-zone-speeding">School Zone Speeding Ticket</option><option value="work-zone-speeding">Work Zone Speeding Ticket</option><option value="reckless-driving">Reckless Driving</option><option value="careless-driving">Careless Driving</option><option value="illegal-u-turn">Illegal U-Turn Ticket</option><option value="following-too-close">Following Too Closely Ticket</option><option value="failure-to-yield">Failure to Yield Ticket</option><option value="no-headlights">No Headlights Ticket</option><option value="window-tint">Window Tint Ticket</option></select>';document.getElementById('p-rows').appendChild(d);}
+addRow();
+function calcPoints(){
+var sels=document.querySelectorAll('#p-rows select'),t=0;
+sels.forEach(function(s){t+=PV[s.value]||0});
+var st=document.getElementById('p-state');var slug=st.value,name=st.options[st.selectedIndex].text;
+var risk=t>=12?'<span style="color:#b3261e">High — at or above a typical suspension threshold</span>':t>=8?'<span style="color:#d48806">Elevated — one more ticket could trigger review</span>':'Low — below typical thresholds';
+var el=document.getElementById('p-out');el.className='calc-result show';
+el.innerHTML='<div>Estimated points:</div><div class="big">'+t+' points</div><p style="margin:8px 0 0">Risk level: '+risk+'</p><p style="margin:8px 0 0">Exact values &amp; threshold: <a href="/points/'+slug+'/">'+name+' license points system</a></p>';
+}
+</script>
+<h2>How point systems work</h2>
+<p>Most states assign points per conviction, keep them on a rolling 12–36 month window, and trigger escalating consequences — warning letters, mandatory courses, then suspension — at set thresholds. A handful of states (e.g., Kansas, Louisiana, Minnesota, Mississippi, Oregon, Rhode Island, Washington, Wyoming, Hawaii) use no point system and instead suspend for repeat convictions directly.</p>
+
+<div class="disclaimer-note">This page is general information, not legal advice. Fines, surcharges and court costs vary by county and court — always verify the amount on your citation or with the court listed on it. See our <a href="/disclaimer/">full disclaimer</a> and <a href="/editorial-policy/">editorial policy</a>.</div>
+</main>
+<footer class="site-footer"><div class="wrap">
+<a href="/about/">About</a><a href="/contact/">Contact</a><a href="/editorial-policy/">Editorial Policy</a><a href="/privacy/">Privacy</a><a href="/disclaimer/">Disclaimer</a>
+<p>© 2026 TicketCostGuide. Independent, sourced guide to US traffic ticket and court fine costs. Data compiled from state statutes, DMV publications and court fee schedules.</p>
+</div></footer>
+</body>
+</html>

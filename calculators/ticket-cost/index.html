@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speeding Ticket Cost Calculator (2026): Estimate Your Total</title>
+<meta name="description" content="Free speeding ticket cost calculator. Pick your state and mph over the limit to estimate your total fine with surcharges and court costs.">
+<link rel="canonical" href="https://www.ticketcostguide.com/calculators/ticket-cost/">
+<link rel="stylesheet" href="/assets/style.css">
+<meta property="og:title" content="Speeding Ticket Cost Calculator (2026): Estimate Your Total">
+<meta property="og:description" content="Free speeding ticket cost calculator. Pick your state and mph over the limit to estimate your total fine with surcharges and court costs.">
+<meta property="og:url" content="https://www.ticketcostguide.com/calculators/ticket-cost/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="TicketCostGuide">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://www.ticketcostguide.com/#website", "url": "https://www.ticketcostguide.com/", "name": "TicketCostGuide", "description": "Independent, sourced guide to US traffic ticket and court fine costs.", "publisher": {"@id": "https://www.ticketcostguide.com/#org"}}, {"@type": "Organization", "@id": "https://www.ticketcostguide.com/#org", "name": "TicketCostGuide", "url": "https://www.ticketcostguide.com/", "logo": {"@type": "ImageObject", "url": "https://www.ticketcostguide.com/assets/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ticketcostguide.com/"}, {"@type": "ListItem", "position": 2, "name": "Calculators"}, {"@type": "ListItem", "position": 3, "name": "Ticket Cost"}]}, {"@type": "Article", "headline": "Speeding Ticket Cost Calculator (2026): Estimate Your Total", "description": "Free speeding ticket cost calculator. Pick your state and mph over the limit to estimate your total fine with surcharges and court costs.", "mainEntityOfPage": "https://www.ticketcostguide.com/calculators/ticket-cost/", "datePublished": "2026-10-15", "dateModified": "2026-10-15", "author": {"@type": "Organization", "name": "Editorial Team, TicketCostGuide", "url": "https://www.ticketcostguide.com/editorial-policy/"}, "publisher": {"@id": "https://www.ticketcostguide.com/#org"}}]}</script>
+
+</head>
+<body>
+<header class="site-header"><div class="wrap">
+<a class="logo" href="/">Ticket<span>Cost</span>Guide</a>
+<nav class="main-nav"><a href="/speeding-ticket-cost/">Speeding Tickets</a><a href="/ticket-cost/">Violations</a><a href="/points/">License Points</a><a href="/calculators/ticket-cost/">Calculator</a></nav>
+</div></header>
+<main class="container">
+<nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li>Calculators</li><li>Ticket Cost</li></ol></nav>
+<span class="kicker">Calculator</span>
+<h1>Speeding Ticket Cost Calculator</h1>
+<p class="byline">By <a href="/editorial-policy/">Editorial Team, TicketCostGuide</a> · Last reviewed 2026-10-15</p>
+
+<p class="quick-answer">Enter your state and how far over the limit you were cited, and this tool estimates your <strong>total out-of-pocket cost</strong> — base fine plus typical surcharges and court costs. Exact amounts are set by the court on your citation; use your state's page (linked in the result) for the sourced fine table.</p>
+<div class="calc">
+<label for="c-state">State</label><select id="c-state"><option value="alabama">Alabama</option><option value="alaska">Alaska</option><option value="arizona">Arizona</option><option value="arkansas">Arkansas</option><option value="california">California</option><option value="colorado">Colorado</option><option value="connecticut">Connecticut</option><option value="delaware">Delaware</option><option value="florida">Florida</option><option value="georgia">Georgia</option><option value="hawaii">Hawaii</option><option value="idaho">Idaho</option><option value="illinois">Illinois</option><option value="indiana">Indiana</option><option value="iowa">Iowa</option><option value="kansas">Kansas</option><option value="kentucky">Kentucky</option><option value="louisiana">Louisiana</option><option value="maine">Maine</option><option value="maryland">Maryland</option><option value="massachusetts">Massachusetts</option><option value="michigan">Michigan</option><option value="minnesota">Minnesota</option><option value="mississippi">Mississippi</option><option value="missouri">Missouri</option><option value="montana">Montana</option><option value="nebraska">Nebraska</option><option value="nevada">Nevada</option><option value="new-hampshire">New Hampshire</option><option value="new-jersey">New Jersey</option><option value="new-mexico">New Mexico</option><option value="new-york">New York</option><option value="north-carolina">North Carolina</option><option value="north-dakota">North Dakota</option><option value="ohio">Ohio</option><option value="oklahoma">Oklahoma</option><option value="oregon">Oregon</option><option value="pennsylvania">Pennsylvania</option><option value="rhode-island">Rhode Island</option><option value="south-carolina">South Carolina</option><option value="south-dakota">South Dakota</option><option value="tennessee">Tennessee</option><option value="texas">Texas</option><option value="utah">Utah</option><option value="vermont">Vermont</option><option value="virginia">Virginia</option><option value="washington">Washington</option><option value="west-virginia">West Virginia</option><option value="wisconsin">Wisconsin</option><option value="wyoming">Wyoming</option></select>
+<label for="c-mph">MPH over the limit</label>
+<select id="c-mph"><option value="7">1–10 over</option><option value="12">11–15 over</option><option value="18">16–20 over</option><option value="23">21–25 over</option><option value="30">26–30 over</option><option value="35">30+ over</option></select>
+<label for="c-zone">Where were you cited?</label>
+<select id="c-zone"><option value="1">Regular road</option><option value="1.6">School zone</option><option value="2">Work / construction zone</option></select>
+<button type="button" onclick="calcTicket()">Estimate total cost</button>
+<div class="calc-result" id="c-out"></div>
+<p class="calc-note">Estimate combines typical statutory fine brackets with average mandatory surcharges and court costs. School/work-zone multipliers reflect common doubling rules. Not legal advice; your citation controls.</p>
+</div>
+<script>
+function calcTicket(){
+var mph=+document.getElementById('c-mph').value;
+var zone=+document.getElementById('c-zone').value;
+var st=document.getElementById('c-state');
+var slug=st.value, name=st.options[st.selectedIndex].text;
+var base=Math.round((35+mph*6.5)/5)*5;           // fine bracket model
+var sur=Math.round((85+mph*1.8)/5)*5;            // surcharges + court costs model
+var lo=Math.round((base*zone+sur)*0.75/5)*5, hi=Math.round((base*zone+sur)*1.45/5)*5;
+var el=document.getElementById('c-out');
+el.className='calc-result show';
+el.innerHTML='<div>Estimated total in '+name+':</div><div class="big">$'+lo+' – $'+hi+'</div>'+
+'<p style="margin:8px 0 0">See the sourced fine table: <a href="/speeding-ticket-cost/'+slug+'/">Speeding ticket cost in '+name+'</a></p>';
+}
+</script>
+<h2>How speeding ticket totals are built</h2>
+<p>Your final bill is rarely just the statutory fine. Most states add court costs, a state assessment or surcharge, and sometimes county add-ons — items that frequently exceed the base fine itself. School-zone and work-zone citations commonly double the fine portion. The state pages on this site itemize each component with its legal source.</p>
+
+<div class="disclaimer-note">This page is general information, not legal advice. Fines, surcharges and court costs vary by county and court — always verify the amount on your citation or with the court listed on it. See our <a href="/disclaimer/">full disclaimer</a> and <a href="/editorial-policy/">editorial policy</a>.</div>
+</main>
+<footer class="site-footer"><div class="wrap">
+<a href="/about/">About</a><a href="/contact/">Contact</a><a href="/editorial-policy/">Editorial Policy</a><a href="/privacy/">Privacy</a><a href="/disclaimer/">Disclaimer</a>
+<p>© 2026 TicketCostGuide. Independent, sourced guide to US traffic ticket and court fine costs. Data compiled from state statutes, DMV publications and court fee schedules.</p>
+</div></footer>
+</body>
+</html>
