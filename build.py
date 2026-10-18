@@ -91,9 +91,16 @@ def layout(*, title, description, path, h1, kicker, body, schema_extra=None,
     crumb_html = "".join(
         f'<li><a href="{esc(h)}">{esc(n)}</a></li>' if h else f'<li>{esc(n)}</li>'
         for n,h in crumbs)
+    # Schema rule: every ListItem needs "item" (Google flags middle items
+    # without it — "Missing field item"). Middle crumbs that have no real
+    # page (h is None) stay visible in the nav but are left out of the
+    # JSON-LD; the last crumb uses this page's own URL. Positions renumbered.
+    ld_crumbs = [(n, SITE+h if h else None) for n,h in crumbs]
+    if ld_crumbs: ld_crumbs[-1] = (ld_crumbs[-1][0], url)
+    ld_crumbs = [(n,u) for n,u in ld_crumbs if u]
     crumb_ld = {"@type":"BreadcrumbList","itemListElement":[
-        {"@type":"ListItem","position":i+1,"name":n,
-         **({"item":SITE+h} if h else {})} for i,(n,h) in enumerate(crumbs)]}
+        {"@type":"ListItem","position":i+1,"name":n,"item":u}
+        for i,(n,u) in enumerate(ld_crumbs)]}
     graph = [
         {"@type":"WebSite","@id":SITE+"/#website","url":SITE+"/","name":BRAND,
          "description":"Independent, sourced guide to US traffic ticket and court fine costs.",
