@@ -540,14 +540,77 @@ def prune_dead_links():
             open(p,"w",encoding="utf-8").write("".join(parts)); total+=1
     print(f"pruned dead links on {total} pages ({len(exist)} live paths)")
 
+
+def add_cross_links():
+    """Inject internal links so every violation-by-state page is reachable by crawl, not
+    only through the sitemap. Idempotent: each block sits between <!--xl:NAME--> markers
+    and is replaced on every run, so re-rendering pages never duplicates it.
+      /ticket-cost/                 -> every violation hub
+      /ticket-cost/<v>/             -> its 50 state pages
+      /ticket-cost/<v>/<state>/     -> other violations in that state + same violation next door
+      /speeding-ticket-cost/<state>/ -> every violation page for that state
+    """
+    import glob as _glob
+    exist=set()
+    for f in _glob.glob(os.path.join(ROOT,"**","index.html"),recursive=True):
+        rel=os.path.relpath(os.path.dirname(f),ROOT).replace("\\","/")
+        exist.add("/" if rel=="." else f"/{rel}/")
+    label=dict(VIOLATIONS)
+    vio_live=[v for v,_ in VIOLATIONS if f"/ticket-cost/{v}/" in exist]
+    def put(path, name, block):
+        f=os.path.join(ROOT,path.strip("/"),"index.html")
+        if not os.path.exists(f): return False
+        t=open(f,encoding="utf-8").read()
+        mk_open, mk_close = f"<!--xl:{name}-->", f"<!--/xl:{name}-->"
+        block=f"{mk_open}{block}{mk_close}"
+        if mk_open in t:
+            t=re.sub(re.escape(mk_open)+r".*?"+re.escape(mk_close), lambda m: block, t, count=1, flags=re.S)
+        else:
+            for marker in ('<div class="related">','<section class="faq">','</main>'):
+                if marker in t:
+                    t=t.replace(marker, block+marker, 1); break
+            else:
+                return False
+        open(f,"w",encoding="utf-8").write(t); return True
+    def ul(items): return '<ul class="state-list">'+"".join(f'<li><a href="{h}">{esc(x)}</a></li>' for h,x in items)+"</ul>"
+    n=0
+    if vio_live:
+        n+=put("/ticket-cost/","violations",
+               "<h2>Ticket costs by violation</h2>"+ul([(f"/ticket-cost/{v}/",label[v]) for v in vio_live]))
+    for v in vio_live:
+        st=[(f"/ticket-cost/{v}/{slug}/",name) for name,slug,_,_ in STATES if f"/ticket-cost/{v}/{slug}/" in exist]
+        if st:
+            n+=put(f"/ticket-cost/{v}/","states",
+                   f"<h2>{esc(label[v])} cost by state</h2><p>Fines, surcharges and points differ by state. Choose yours:</p>"+ul(st))
+    for name,slug,_,nbrs in STATES:
+        here=[(f"/ticket-cost/{v}/{slug}/",f"{label[v]} in {name}") for v in vio_live if f"/ticket-cost/{v}/{slug}/" in exist]
+        if f"/speeding-ticket-cost/{slug}/" in exist and here:
+            n+=put(f"/speeding-ticket-cost/{slug}/","state-vios",
+                   f"<h2>Other ticket costs in {esc(name)}</h2>"+ul(here))
+        for v in vio_live:
+            me=f"/ticket-cost/{v}/{slug}/"
+            if me not in exist: continue
+            others=[(h,x) for h,x in here if h!=me]
+            if f"/speeding-ticket-cost/{slug}/" in exist:
+                others=[(f"/speeding-ticket-cost/{slug}/",f"Speeding ticket in {name}")]+others
+            near=[(f"/ticket-cost/{v}/{ns}/",f"{label[v]} in {STATE_BY_SLUG[ns][0]}") for ns in nbrs
+                  if ns in STATE_BY_SLUG and f"/ticket-cost/{v}/{ns}/" in exist]
+            blk=""
+            if others: blk+=f"<h2>More ticket costs in {esc(name)}</h2>"+ul(others)
+            if near: blk+=f"<h2>{esc(label[v])}: nearby states</h2>"+ul(near)
+            if blk: n+=put(me,"cross",blk)
+    print(f"cross-links written on {n} pages")
+
 if __name__=="__main__":
     cmd = sys.argv[1] if len(sys.argv)>1 else "shell"
     if cmd=="shell":
         build_homepage(); legal_pages(); calc_ticket_cost(); calc_points(); calc_insurance(); crawler_files(); build_sitemap()
         print("shell built")
     elif cmd=="render":
-        render_dir(sys.argv[2]); prune_dead_links(); build_sitemap()
+        render_dir(sys.argv[2]); prune_dead_links(); add_cross_links(); build_sitemap()
     elif cmd=="prune":
         prune_dead_links()
     elif cmd=="sitemap":
         build_sitemap()
+    elif cmd=="links":
+        add_cross_links(); build_sitemap()
