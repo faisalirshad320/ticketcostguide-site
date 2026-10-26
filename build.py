@@ -541,6 +541,24 @@ def prune_dead_links():
     print(f"pruned dead links on {total} pages ({len(exist)} live paths)")
 
 
+def build_404():
+    """Static 404 page served (with a real 404 status) by index.php for unknown URLs."""
+    body = """
+<p class="quick-answer">That page does not exist. It may have moved, or the address may be mistyped.</p>
+<h2>Find what you were looking for</h2>
+<ul class="state-list">
+<li><a href="/speeding-ticket-cost/">Speeding ticket cost by state</a></li>
+<li><a href="/ticket-cost/">Ticket cost by violation</a></li>
+<li><a href="/points/">License points</a></li>
+<li><a href="/calculators/ticket-cost/">Ticket cost calculator</a></li>
+</ul>
+"""
+    page = layout(title=f"Page not found | {BRAND}", description="This page could not be found.",
+                  path="/404/", h1="Page not found", kicker="404", body=body, breadcrumbs=[("Home","/"),("Not found",None)])
+    page = page.replace('<head>', '<head>\n<meta name="robots" content="noindex,follow">', 1)
+    with open(os.path.join(ROOT,"404.html"),"w",encoding="utf-8") as f:
+        f.write(page)
+
 def add_cross_links():
     """Inject internal links so every violation-by-state page is reachable by crawl, not
     only through the sitemap. Idempotent: each block sits between <!--xl:NAME--> markers
@@ -604,7 +622,7 @@ def add_cross_links():
 if __name__=="__main__":
     cmd = sys.argv[1] if len(sys.argv)>1 else "shell"
     if cmd=="shell":
-        build_homepage(); legal_pages(); calc_ticket_cost(); calc_points(); calc_insurance(); crawler_files(); build_sitemap()
+        build_homepage(); legal_pages(); calc_ticket_cost(); calc_points(); calc_insurance(); crawler_files(); build_404(); build_sitemap()
         print("shell built")
     elif cmd=="render":
         render_dir(sys.argv[2]); prune_dead_links(); add_cross_links(); build_sitemap()
@@ -614,3 +632,5 @@ if __name__=="__main__":
         build_sitemap()
     elif cmd=="links":
         add_cross_links(); build_sitemap()
+    elif cmd=="404":
+        build_404()
