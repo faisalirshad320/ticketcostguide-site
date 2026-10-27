@@ -447,6 +447,33 @@ def build_sitemap():
         f.write(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{items}</urlset>')
     print(f"sitemap.xml: {len(urls)} URLs")
 
+
+# Question-form titles ("How much is a ... ticket in STATE?") match how people search;
+# applied at render time so re-rendering article-machine specs keeps them.
+_QV={"speeding-ticket-cost":"a Speeding Ticket","driving-without-license":"a Driving Without a License Ticket","expired-registration":"an Expired Registration Ticket",
+"failure-to-yield":"a Failure to Yield Ticket","texting-cellphone":"a Texting While Driving Ticket","reckless-driving":"a Reckless Driving Ticket",
+"stop-sign":"a Stop Sign Ticket","red-light":"a Red Light Ticket","suspended-license":"a Suspended License Ticket","seatbelt":"a Seatbelt Ticket",
+"no-insurance":"a No Insurance Ticket","window-tint":"a Window Tint Ticket","child-seat":"a Child Seat Ticket","careless-driving":"a Careless Driving Ticket",
+"school-zone-speeding":"a School Zone Speeding Ticket","work-zone-speeding":"a Work Zone Speeding Ticket"}
+def question_title(path, title):
+    parts=[x for x in path.strip("/").split("/") if x]
+    v = parts[0] if parts and parts[0]=="speeding-ticket-cost" else (parts[1] if len(parts)>1 and parts[0]=="ticket-cost" else None)
+    if v not in _QV: return title
+    noun=_QV[v]; bare=noun.split(" ",1)[1]
+    import re as _re
+    m=_re.search(r" in (.+?) \(2026\)", title)
+    state_page = (parts[0]=="speeding-ticket-cost" and len(parts)==2) or (parts[0]=="ticket-cost" and len(parts)==3)
+    if state_page:
+        if not m: return title
+        S=m.group(1)
+        opts=[f"How Much Is {noun} in {S}? 2026 Fines & Points", f"How Much Is {noun} in {S}? (2026)", f"{bare} in {S}: 2026 Cost",
+              f"No License Ticket in {S}: 2026 Cost", f"{bare.replace(' Ticket','')} in {S} (2026)"]
+    else:
+        opts=[f"How Much Is {noun}? 2026 Cost by State", f"How Much Is {noun}? (2026)"]
+    for o in opts:
+        if len(o)<=60: return o
+    return title
+
 # ---------------- ARTICLE RENDERER ----------------
 def render_article(spec):
     """Render one article-machine page-spec JSON (generate-tickets.js output) into a site page.
@@ -495,7 +522,7 @@ def render_article(spec):
     if len(parts)>=1: crumbs.append((parts[0].replace("-"," ").title(), f"/{parts[0]}/" if len(parts)>1 else None))
     if len(parts)>=2: crumbs.append((parts[-1].replace("-"," ").title(), None))
     schema=[faq_schema(faqs)] if faqs else []
-    page = layout(title=spec["title"], description=spec.get("description") or spec.get("meta_description",""), path=p,
+    page = layout(title=question_title(p, spec["title"]), description=spec.get("description") or spec.get("meta_description",""), path=p,
         h1=spec.get("h1", spec["title"]), kicker=spec.get("kicker","Traffic Fines"),
         body=body, schema_extra=schema, breadcrumbs=crumbs, date_modified=TODAY)
     return write_page(p, page)
